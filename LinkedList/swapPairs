@@ -1,0 +1,21 @@
+//leetcode24
+//注意空指针的问题，最多定义到head，head->next就有空的危险
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        ListNode* dummyHead = new ListNode(0); 
+        dummyHead->next = head;
+        ListNode* pre = dummyHead;
+        ListNode* cur = head;
+        while(cur != nullptr && cur->next != nullptr) {
+            ListNode* next= cur->next;
+            ListNode* tmp = next->next; 
+            pre->next=next;
+            next->next=cur;
+            cur->next=tmp;
+            pre=cur;
+            cur=tmp;
+        }
+        return dummyHead->next;
+    }
+};
