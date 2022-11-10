@@ -1,0 +1,54 @@
+//leetcode 209
+//搞了一个不减和数组，用双指针，双指针的核心就在于能利用条件卡住i，j
+class Solution {
+public:
+    int minSubArrayLen(int target, vector<int>& nums) {
+        vector<int> sums(nums.size()+1,0);
+        for(int i=0;i<nums.size();i++){
+            sums[i+1]=sums[i]+nums[i];
+        }
+        int j=1;
+        int length=nums.size();
+        if(sums[nums.size()]<target){
+            return 0;
+        }
+        for(int i=0;i<sums.size()-1;i++){
+            while(j<sums.size()-1){
+            if(sums[j]-sums[i]>=target){
+                length=min(length,j-i);
+                break;
+            }
+            else if(sums[j]-sums[i]<target&&sums[j+1]-sums[i]>=target){
+                length=min(length,j-i+1);
+                break;
+            }
+            j++;
+            }
+        }
+        return length;
+    }
+};
+
+
+//滑动窗口做法
+//或许更优
+class Solution {
+public:
+    int minSubArrayLen(int s, vector<int>& nums) {
+        int result = INT32_MAX; 
+        int sum = 0; 
+        int subLength = 0;
+        for (int i = 0; i < nums.size(); i++) { 
+            sum = 0;
+            for (int j = i; j < nums.size(); j++) { 
+                sum += nums[j];
+                if (sum >= s) { 
+                    subLength = j - i + 1;
+                    result = result < subLength ? result : subLength;
+                    break; 
+                }
+            }
+        }
+        return result == INT32_MAX ? 0 : result;
+    }
+};
