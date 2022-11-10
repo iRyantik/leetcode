@@ -1,0 +1,39 @@
+//leetcode242&383
+//数组哈希应用，简简单单降个时间复杂度
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        int record[26] = {0};
+        for (int i = 0; i < s.size(); i++) {
+            record[s[i] - 'a']++;
+        }
+        for (int i = 0; i < t.size(); i++) {
+            record[t[i] - 'a']--;
+        }
+        for (int i = 0; i < 26; i++) {
+            if (record[i] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+};
+
+class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+        int letter[26]={0};
+        for(int i=0;i<magazine.length();i++){
+            letter[magazine[i]-'a']++;
+        }
+        for(int i=0;i<ransomNote.length();i++){
+            letter[ransomNote[i]-'a']--;
+        }
+        for(int i=0;i<26;i++){
+            if(letter[i]<0){
+                return false;
+            }
+        }
+        return true;
+    }
+};
