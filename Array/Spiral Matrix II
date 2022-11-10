@@ -1,0 +1,41 @@
+//leetcode59
+//重点在于搞清边界，高级点叫循环不变量原则
+//左闭右开
+class Solution {
+public:
+    vector<vector<int>> generateMatrix(int n) {
+        vector<vector<int>> result(n,vector(n,0));
+        int startx=0;
+        int starty=0;
+        int edge=1;
+        int circle=n/2;
+        int index=1;
+        int i,j;
+        while(circle>0){
+        for(i=starty;i<n-edge;i++){
+            result[startx][i]=index;
+            index++;
+        }
+        for(j=startx;j<n-edge;j++){
+            result[j][i]=index;
+            index++;
+        }
+        for(;i>startx;i--){
+            result[j][i]=index;
+            index++;
+        }
+        for(;j>starty;j--){
+            result[j][starty]=index;
+            index++;
+        }
+        edge++;
+        startx++;
+        starty++;
+        circle--;
+    }
+    if(n%2==1){
+        result[n/2][n/2]=n*n;
+    }
+    return result;
+    }
+};
