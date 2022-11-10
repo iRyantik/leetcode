@@ -1,0 +1,60 @@
+//链表的迷惑之处在于变量名反复变换，搞清楚所设变量目的，另外基本上所有操作的第一部都是先记录要操作的最后一个节点的下一个
+//虚拟头节点可以简化一下书写
+
+
+//不设虚拟头节点的版本
+class Solution {
+public:
+    ListNode* removeElements(ListNode* head, int val) {
+        while(head!=NULL&&head->val==val){
+            ListNode *pre=head;
+            head=head->next;
+            delete pre;
+        }
+     //
+		while (head != NULL) {
+			if (head->value != val) {
+				break;
+			}
+			head = head->next;
+		}
+    //
+        ListNode *pre=head;
+        ListNode *cur=head;
+        while(cur!=NULL){
+            if(cur->val==val){
+                pre->next=cur->next;
+            }
+            else{
+                pre=cur;
+            }
+            cur=cur->next;
+        }
+        return head;
+    }
+};
+
+
+
+//dummyhead version
+class Solution {
+public:
+    ListNode* removeElements(ListNode* head, int val) {
+        ListNode* dummyHead = new ListNode(0);
+        dummyHead->next = head;
+        ListNode* cur = dummyHead;
+        while (cur->next != NULL) {
+            if(cur->next->val == val) {
+                ListNode* tmp = cur->next;
+                cur->next = cur->next->next;
+                delete tmp;
+            } else {
+                cur = cur->next;
+            }
+        }
+        head = dummyHead->next;
+        delete dummyHead;
+        return head;
+    }
+};
+//
