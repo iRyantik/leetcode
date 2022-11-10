@@ -1,4 +1,4 @@
-//leetcode1&15
+//leetcode1&454
 //map的价值在于表示两种意义
 //梦开始的地方，我也做了好几个版本
 //map
@@ -54,5 +54,27 @@ public:
             map.insert(pair<int, int>(nums[i], i)); 
         }
         return {};
+    }
+};
+//454 给定四个包含整数的数组列表 A , B , C , D ,计算有多少个元组 (i, j, k, l) ，使得 A[i] + B[j] + C[k] + D[l] = 0。
+//本质是还是第一题的套用
+class Solution {
+public:
+    int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D) {
+        unordered_map<int, int> umap; 
+        for (int a : A) {
+            for (int b : B) {
+                umap[a + b]++;
+            }
+        }
+        int count = 0; 
+        for (int c : C) {
+            for (int d : D) {
+                if (umap.find(0 - (c + d)) != umap.end()) {
+                    count += umap[0 - (c + d)];
+                }
+            }
+        }
+        return count;
     }
 };
